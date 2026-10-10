@@ -215,3 +215,13 @@ Paths and application arguments are user data, so they may contain ordinary text
 The import loader `hoo.hoooooooo.hoo` combines the dependency graph, and its local `hooo` helper visits dependencies. The compiler driver's local `hooooo` alias refers to that loader. Code generation emits locations using `hooooooooooooooooooooooooooooooooooooooooooooooooooooooooo` (57 o characters). The native location function remains `hooooo`, now taking a file pointer as its third argument. Source paths are escaped as UTF-8 octal bytes in C literals.
 
 Language imports use the word with 85 o characters and a Hoo-encoded literal path. The Hoo-only CLI command and flag spellings are unchanged from v0.3.0.
+
+## Remaining internal identifiers (v0.4.0)
+
+All 160 remaining Python binding and field spellings now use Hoo words: local variables, parameters, constants, imported module aliases, AST fields, parser/checker/emitter state and parsed CLI attributes. Python names start at 512 o characters; the complete old-to-new map is in `hoo-identifiers.json`. Custom callable names from v0.2.0 remain unchanged.
+
+All 98 remaining native variable, parameter and field spellings use Hoo words starting at 256 o characters. This includes tagged values, union fields, list storage, GC state, source locations, widget handles, callback pointers and custom Objective-C properties. GTK widget metadata keys are `hoo`, `hooo`, `hoooo` and `hooooo`. The generated C uses the new field names. Native AppKit/GTK and standard-library types, selectors, constants and fields retain their required host spellings. Python protocol names such as `__init__`, `__name__`, `__file__` and `__version__` also retain their conventional spellings. Semantic operation labels and diagnostics remain readable string data.
+
+The macOS bundle executable is `hoo`; temporary generated code and executables are `hoo.c` and `hoo`. Test environment switches are now `hoo=1` for sanitizers and `hooo=1` for native GUI checks. The host toolchain selector `CC` and OS environment variable `HOME` retain their standard names.
+
+This changes Python parameter/field/constant names and native struct field names. Prefer positional Python arguments, or consult the JSON map for renamed keywords. The optional source-origin keyword `hoo` remains unchanged. Regenerate emitted C with v0.4.0 before linking it against the v0.4.0 runtime. Compiler command and flag spellings remain unchanged from v0.3.0.

@@ -77,7 +77,7 @@ Count the `o` characters **after** the initial `h`. Their count is the token num
 
 Numbers are terminated sequences of hexadecimal hoo digits. Strings are terminated sequences of UTF-8 bytes, each encoded as two hexadecimal hoo digits. Identifiers occupy a separate word-length range. The grammar is prefix and self-delimiting: you must count correctly, but the compiler does not need to guess.
 
-The compiler implementation also uses Hoo function/class names, Hoo filenames and Hoo native symbols. See the [implementation naming reference](docs/hoo-names.md). Write `./bin/hoo hooooooo examples/hello.hoo --hoooo`. The installed executable is `hoo`. Commands and flags are exclusively Hoo words; see the naming reference for their meanings.
+The compiler implementation uses Hoo names for functions, classes, variables, parameters, constants, AST fields, native symbols and runtime fields. See the [implementation naming reference](docs/hoo-names.md). Write `./bin/hoo hooooooo examples/hello.hoo --hoooo`. The installed executable is `hoo`. Commands and flags are exclusively Hoo words; see the naming reference for their meanings.
 
 Read the complete [language specification](docs/language.md), [desktop guide](docs/desktop.md), and [compiler architecture](docs/architecture.md).
 
@@ -115,8 +115,8 @@ python3 tools/generate_examples.py
 
 ```sh
 python3 -m unittest discover -s tests -v
-HOO_SANITIZE=1 python3 -m unittest discover -s tests -v
-HOO_GUI_TEST=1 python3 -m unittest discover -s tests -v
+hoo=1 python3 -m unittest discover -s tests -v
+hooo=1 python3 -m unittest discover -s tests -v
 ```
 
 Linux desktop tests run under `xvfb-run -a`. GitHub Actions checks Linux and macOS, installs the package into a fresh virtual environment, executes compiled programs, exercises native controls, and publishes downloadable example artifacts.

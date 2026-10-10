@@ -30,20 +30,20 @@ jobs:
           git diff --exit-code -- examples
       - name: Compiler and runtime with sanitizers
         env:
-          HOO_SANITIZE: '1'
+          hoo: '1'
         run: python -m unittest discover -s tests -v
       - name: Linux native desktop controls
         if: runner.os == 'Linux'
         env:
-          HOO_SANITIZE: '1'
-          HOO_GUI_TEST: '1'
+          hoo: '1'
+          hooo: '1'
         run: |
           xvfb-run -a python -m unittest discover -s tests -p test_language.py -k desktop_controls -v
           xvfb-run -a python -m unittest discover -s tests -p test_modules.py -k modular_desktop_callbacks -v
       - name: macOS native desktop controls and bundle
         if: runner.os == 'macOS'
         env:
-          HOO_GUI_TEST: '1'
+          hooo: '1'
         run: |
           python -m unittest discover -s tests -p test_language.py -k desktop_controls -v
           python -m unittest discover -s tests -p test_modules.py -k modular_desktop_callbacks -v
