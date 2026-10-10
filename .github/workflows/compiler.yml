@@ -1,0 +1,67 @@
+name: Compiler and native desktop
+on:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+concurrency:
+  group: hoo-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  compiler:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-15]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Linux desktop dependencies
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y clang pkg-config libgtk-3-dev xvfb
+      - name: Generated sources remain reproducible
+        run: |
+          python tools/generate_examples.py
+          git diff --exit-code -- examples
+      - name: Compiler and runtime with sanitizers
+        env:
+          HOO_SANITIZE: '1'
+        run: python -m unittest discover -s tests -v
+      - name: Linux native desktop controls
+        if: runner.os == 'Linux'
+        env:
+          HOO_SANITIZE: '1'
+          HOO_GUI_TEST: '1'
+        run: xvfb-run -a python -m unittest discover -s tests -p test_language.py -k desktop_controls -v
+      - name: macOS native desktop controls and bundle
+        if: runner.os == 'macOS'
+        env:
+          HOO_GUI_TEST: '1'
+        run: |
+          python -m unittest discover -s tests -p test_language.py -k desktop_controls -v
+          ./hooc build examples/counter.hoo -o build/HooCounter.app --app
+          ./hooc build examples/notepad.hoo -o build/HooNotes.app --app
+          ./hooc build examples/editor.hoo -o build/HooEditor.app --app
+      - name: Linux desktop executables
+        if: runner.os == 'Linux'
+        run: |
+          ./hooc build examples/counter.hoo -o build/hoo-counter
+          ./hooc build examples/notepad.hoo -o build/hoo-notes
+          ./hooc build examples/editor.hoo -o build/hoo-editor
+      - name: Fresh installation includes native runtime
+        run: |
+          python -m venv /tmp/hoo-install
+          /tmp/hoo-install/bin/pip install .
+          /tmp/hoo-install/bin/hooc build examples/hello.hoo --headless -o /tmp/hoo-installed-hello
+          /tmp/hoo-installed-hello
+      - name: Desktop application artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: hoo-desktop-${{ runner.os }}-${{ runner.arch }}
+          path: build/
+          retention-days: 14

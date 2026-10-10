@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hoohurtyou"
+version = "0.1.0"
+description = "Hoo: a native compiled language made exclusively of hoo words"
+requires-python = ">=3.10"
+license = "MIT"
+
+[project.scripts]
+hooc = "hoo.__main__:main"
+
+[tool.setuptools]
+packages = ["hoo"]
+
+[tool.setuptools.package-data]
+hoo = ["runtime/*.h", "runtime/*.c", "runtime/*.m"]
