@@ -1,4 +1,4 @@
-# The Hoo language specification (0.4.0)
+# The Hoo language specification (0.5.0)
 
 This document uses English metasyntax to explain the grammar. **None of those English names are accepted in source.** Every token below is an `h` followed by exactly the indicated number of `o` characters. For example, `end` means `hoo`.
 
@@ -145,6 +145,19 @@ Example in explanatory notation: `print integer HEX1 end` prints 1. Its actual H
 | 83 | `enabled` |
 | 84 | `home` |
 | 85 | `import` |
+| 86 | `slice` |
+| 87 | `code` |
+| 88 | `character` |
+| 89 | `find` |
+| 90 | `random` |
+| 91 | `clock` |
+| 92 | `canvas` |
+| 93 | `fill` |
+| 94 | `clear` |
+| 95 | `paint` |
+| 96 | `timer` |
+| 97 | `key` |
+| 98 | `pixel` |
 
 ## Builtin expression signatures
 
@@ -188,6 +201,19 @@ Example in explanatory notation: `print integer HEX1 end` prints 1. Its actual H
 | `argument_count` | none | number |
 | `parse_number` | text | number |
 | `exists` | text | boolean |
+| `slice` | text, start, count | text |
+| `code` | text, index | number |
+| `character` | number | text |
+| `find` | text, needle | number |
+| `random` | limit | number |
+| `clock` | none | number |
+| `canvas` | widget, width, height | widget |
+| `fill` | canvas, x, y, width, height, color | void |
+| `clear` | canvas, color | void |
+| `paint` | canvas, x, y, text, color | void |
+| `timer` | milliseconds, callback | void |
+| `key` | canvas | text |
+| `pixel` | canvas, x, y | number |
 
 `print` is a statement accepting a scalar and appending a newline. `do` is a statement evaluating and discarding any expression result.
 
@@ -195,7 +221,19 @@ Example in explanatory notation: `print integer HEX1 end` prints 1. Its actual H
 
 `home` returns the UTF-8 user home path from the HOME environment variable. File operations work on UTF-8 text. `write` replaces file contents. `read` rejects NUL and invalid UTF-8. `exists` checks the filesystem path. `argument(0)` is the first argument after the executable name, and `argument_count` excludes the executable name. Out-of-range argument access fails.
 
+`slice`, `code` and `find` index Unicode code points, matching `length`. `slice(text,start,count)` fails if the range passes the end; `code` returns the code point at an index; `find` returns the first code-point index of a needle or -1. `character` builds one-code-point text and rejects NUL, surrogates and values above U+10FFFF. `random(limit)` returns a uniformly distributed number in `0..limit-1` from a per-process xorshift generator without modulo bias; it is not cryptographic. `clock` returns monotonic milliseconds for measuring elapsed time; its origin is unspecified.
+
 Desktop operations are explained in [the desktop guide](desktop.md). `open_file`/`save_file` return empty text on cancellation. `place` uses top-left coordinates. Window dimensions are 160..10000 by 100..10000 pixels; placement dimensions are 1..10000, and positions are 0..10000. Controls use default rows until explicitly positioned. `enabled` requires a control rather than a window. `run` enters the event loop; closing the last window or `quit` ends the app. macOS terminates immediately; GTK leaves its main loop and allows following statements to execute. Portable programs should make `run` their final statement.
+
+## Canvas, timers and keyboard (0.5.0)
+
+`canvas(window,width,height)` adds a 1..4096 by 1..4096 pixel framebuffer control in the next layout row and gives it keyboard focus. Colors are numbers `0xRRGGBB` (0..16777215). `fill` draws a rectangle clipped to the canvas; `clear` fills it; `paint` draws text with Hoo's built-in 5×7 bitmap font at 2× scale (12 pixels per character, 14 pixels high). Lowercase letters are drawn as uppercase; characters outside ASCII 32..95 are drawn as `?`. Drawing coordinates may lie partially or completely outside the canvas but must be within -100000..100000; `pixel` must be inside and returns the stored color, so drawing is deterministic and testable on every backend.
+
+`key(canvas)` dequeues the next key pressed while the canvas had focus and returns empty text when the queue is empty. Named keys are `left`, `right`, `up`, `down`, `space`, `enter`, `escape`, `backspace` and `tab`; other keys return their lowercase character. The queue keeps the latest 64 keys. Clicking a canvas focuses it.
+
+`timer(milliseconds,callback)` schedules a repeating 1..3600000 ms callback on the native event loop after `run` begins. Timers cannot be cancelled; use state in globals to ignore ticks, or `quit`. Callback execution is single-threaded and never overlaps. Console builds reject canvases and timers at runtime.
+
+`print` flushes standard output after every line, so piped and redirected desktop programs show output immediately.
 
 ## Failures and limits
 

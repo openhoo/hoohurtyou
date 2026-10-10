@@ -18,7 +18,15 @@ hooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
  'open_file':('text',['widget']), 'save_file':('text',['widget']),
  'place':('void',['widget','number','number','number','number']),
  'enabled':('void',['widget','boolean']), 'home':('text',[]),
- 'argument_count':('number',[]), 'parse_number':('number',['text']), 'exists':('boolean',['text'])
+ 'argument_count':('number',[]), 'parse_number':('number',['text']), 'exists':('boolean',['text']),
+ 'slice':('text',['text','number','number']), 'code':('number',['text','number']),
+ 'character':('text',['number']), 'find':('number',['text','text']),
+ 'random':('number',['number']), 'clock':('number',[]),
+ 'canvas':('widget',['widget','number','number']),
+ 'fill':('void',['widget','number','number','number','number','number']),
+ 'clear':('void',['widget','number']), 'paint':('void',['widget','number','number','text','number']),
+ 'timer':('void',['number','callback']), 'key':('text',['widget']),
+ 'pixel':('number',['widget','number','number'])
 }
 
 class hoooooooooooooooooooooooooooooooooooooooooooooo:

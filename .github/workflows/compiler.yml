@@ -39,6 +39,7 @@ jobs:
           hooo: '1'
         run: |
           xvfb-run -a python -m unittest discover -s tests -p test_language.py -k desktop_controls -v
+          xvfb-run -a python -m unittest discover -s tests -p test_language.py -k canvas -v
           xvfb-run -a python -m unittest discover -s tests -p test_modules.py -k modular_desktop_callbacks -v
       - name: macOS native desktop controls and bundle
         if: runner.os == 'macOS'
@@ -46,11 +47,13 @@ jobs:
           hooo: '1'
         run: |
           python -m unittest discover -s tests -p test_language.py -k desktop_controls -v
+          python -m unittest discover -s tests -p test_language.py -k canvas -v
           python -m unittest discover -s tests -p test_modules.py -k modular_desktop_callbacks -v
           ./bin/hoo hoooooo examples/counter.hoo --hoooooo build/HooCounter.app --hooooooo
           ./bin/hoo hoooooo examples/notepad.hoo --hoooooo build/HooNotes.app --hooooooo
           ./bin/hoo hoooooo examples/editor.hoo --hoooooo build/HooEditor.app --hooooooo
           ./bin/hoo hoooooo examples/hoo/hoo.hoo --hoooooo build/HooModules.app --hooooooo
+          ./bin/hoo hoooooo examples/snake.hoo --hoooooo build/HooSnake.app --hooooooo
       - name: Linux desktop executables
         if: runner.os == 'Linux'
         run: |
@@ -58,6 +61,7 @@ jobs:
           ./bin/hoo hoooooo examples/notepad.hoo --hoooooo build/hoo-notes
           ./bin/hoo hoooooo examples/editor.hoo --hoooooo build/hoo-editor
           ./bin/hoo hoooooo examples/hoo/hoo.hoo --hoooooo build/hoo-modules
+          ./bin/hoo hoooooo examples/snake.hoo --hoooooo build/hoo-snake
       - name: Fresh installation includes native runtime
         run: |
           python -m venv /tmp/hoo-install
