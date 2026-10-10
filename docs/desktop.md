@@ -21,6 +21,7 @@ Controls default to vertical rows with margins. Multiline editors occupy 140 pix
 - `counter.hoo`: editable name, count state, increment/reset callbacks.
 - `notepad.hoo`: multiline editor, UTF-8 saving, reload, optional CLI path.
 - `editor.hoo`: multiline editor, native Open and Save As file dialogs, status updates and cancellation handling.
+- `hoo/hoo.hoo`: multi-file counter importing Hoo-named shared state, windows and callback functions from `hoo/hooo.hoo`. The resulting application is a single native executable.
 - `desktop-smoke.hoo`: automated native-control fixture. It creates controls, calls the same function installed as the button handler, reads its changed label, and exits without entering an event loop.
 
 The ordinary language reference uses English names to explain tokens. Actual `.hoo` files contain exclusively hoo words.

@@ -23,7 +23,7 @@ struct hoooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
 void hoo(int argc, char **argv);
 void hooo(void);
 void hoooo(void);
-void hooooo(int line, int column);
+void hooooo(int line, int column, const char *file);
 _Noreturn void hoooooo(const char *message);
 void *hooooooo(size_t bytes);
 void hoooooooo(hoooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo *value);

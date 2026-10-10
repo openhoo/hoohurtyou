@@ -14,9 +14,9 @@ ROOT=Path(__file__).resolve().parents[1]
 
 class FrontendTests(unittest.TestCase):
     def test_source_alphabet(self):
-        for path in (ROOT/'examples').glob('*.hoo'):
+        for path in (ROOT/'examples').rglob('*.hoo'):
             self.assertRegex(path.read_text(),r'\A(?:hoo+\s*)+\Z')
-            hooo(path.read_text())
+            hooo(path.read_text(),path)
     def test_positions(self):
         self.assertEqual((hoooooooooooooooooooooo('hoo\n  hooo')[1].line,hoooooooooooooooooooooo('hoo\n  hooo')[1].column),(2,3))
     def test_forbidden_characters(self):

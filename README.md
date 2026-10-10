@@ -81,6 +81,18 @@ The compiler implementation also uses Hoo function/class names, Hoo filenames an
 
 Read the complete [language specification](docs/language.md), [desktop guide](docs/desktop.md), and [compiler architecture](docs/architecture.md).
 
+## Applications with multiple Hoo files
+
+Version 0.4.0 adds compile-time imports. Imported filenames and directory names are Hoo words too. The included counter separates application controls from shared state and callbacks:
+
+```sh
+./bin/hoo hoo examples/hoo/hoo.hoo
+./bin/hoo hoooooo examples/hoo/hoo.hoo --hoooooo build/HooModules.app --hooooooo
+open build/HooModules.app
+```
+
+`examples/hoo/hoo.hoo` imports `hooo.hoo` using the 85-o import word and a Hoo-encoded literal path. Dependencies compile into the executable. See the language specification for dependency ordering, shared namespaces and limits.
+
 ## Tools for counting regrets
 
 ```sh
@@ -113,6 +125,6 @@ Linux desktop tests run under `xvfb-run -a`. GitHub Actions checks Linux and mac
 
 This is a working small language and desktop toolkit, with deliberately impractical syntax. The custom compiler frontend and runtime are original; final instruction selection, linking, and operating-system widgets use Clang and the platform toolkit.
 
-Desktop applications target macOS or Linux. There is no Windows GUI backend, module system, generic collection type, exception recovery, networking library, threading, or application sandbox yet. Runtime errors exit with status 70. File writes are direct rather than atomic. Widgets are retained for the application's lifetime; temporary language strings and lists are collected. Compiled macOS bundles are local unsigned builds; distribution signing and notarization are separate work.
+Desktop applications target macOS or Linux. There is no Windows GUI backend, generic collection type, exception recovery, networking library, threading, or application sandbox yet. Runtime errors exit with status 70. File writes are direct rather than atomic. Widgets are retained for the application's lifetime; temporary language strings and lists are collected. Compiled macOS bundles are local unsigned builds; distribution signing and notarization are separate work.
 
 MIT licensed. Hoo responsibly.

@@ -1,5 +1,5 @@
 """Hoo's handwritten lexer and recursive-descent prefix parser."""
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 WORDS = {
     2:'end', 3:'let', 4:'set', 5:'function', 6:'body', 7:'return',
@@ -14,7 +14,7 @@ WORDS = {
     53:'put', 54:'argument', 55:'argument_count', 56:'negate',
     57:'break', 58:'continue', 59:'parse_number', 60:'exists',
     61:'textarea', 62:'alert', 80:'open_file', 81:'save_file',
-    82:'place', 83:'enabled', 84:'home',
+    82:'place', 83:'enabled', 84:'home', 85:'import',
 }
 TYPES = {WORDS[i] for i in range(8,15)}
 ARITY = {26:2,27:2,28:2,29:2,30:2,31:2,32:2,33:1,34:2,35:2,
@@ -26,11 +26,12 @@ class hoooooooooooooooooooooooooooooooooooooooooooooooo:
     code: int
     line: int
     column: int
+    source: str | None = None
 
 class hooooooooooooooooooooooooooooooooooooooooooooooooo(Exception):
     def __init__(self, message, token=None):
         self.token = token
-        super().__init__(f'{token.line}:{token.column}: {message}' if token else message)
+        super().__init__((f'{token.source}:' if token.source else '') + f'{token.line}:{token.column}: {message}' if token else message)
 
 @dataclass
 class hoooooooooooooooooooooooooooooooooooooooooooooooooo:
@@ -50,9 +51,10 @@ class hooooooooooooooooooooooooooooooooooooooooooooooooooo:
 class hoooooooooooooooooooooooooooooooooooooooooooooooooooo:
     functions: list
     body: list
+    imports: list = field(default_factory=list)
 
 
-def hoooooooooooooooooooooo(source):
+def hoooooooooooooooooooooo(source, hoo=None):
     tokens = []
     i, line, col = 0, 1, 1
     while i < len(source):
@@ -64,17 +66,17 @@ def hoooooooooooooooooooooo(source):
             continue
         start, column = i, col
         if c != 'h':
-            raise hooooooooooooooooooooooooooooooooooooooooooooooooo('only hoo words and ASCII whitespace are allowed', hoooooooooooooooooooooooooooooooooooooooooooooooo(0,line,col))
+            raise hooooooooooooooooooooooooooooooooooooooooooooooooo('only hoo words and ASCII whitespace are allowed', hoooooooooooooooooooooooooooooooooooooooooooooooo(0,line,col,hoo))
         i += 1
         while i < len(source) and source[i] == 'o': i += 1
         count = i - start - 1
         if count < 2 or (i < len(source) and source[i] not in ' \t\r\n'):
-            raise hooooooooooooooooooooooooooooooooooooooooooooooooo('a word must be h followed by at least two o characters', hoooooooooooooooooooooooooooooooooooooooooooooooo(count,line,column))
+            raise hooooooooooooooooooooooooooooooooooooooooooooooooo('a word must be h followed by at least two o characters', hoooooooooooooooooooooooooooooooooooooooooooooooo(count,line,column,hoo))
         if count > 4095:
-            raise hooooooooooooooooooooooooooooooooooooooooooooooooo('word exceeds the 4095-o limit', hoooooooooooooooooooooooooooooooooooooooooooooooo(count,line,column))
-        tokens.append(hoooooooooooooooooooooooooooooooooooooooooooooooo(count,line,column))
+            raise hooooooooooooooooooooooooooooooooooooooooooooooooo('word exceeds the 4095-o limit', hoooooooooooooooooooooooooooooooooooooooooooooooo(count,line,column,hoo))
+        tokens.append(hoooooooooooooooooooooooooooooooooooooooooooooooo(count,line,column,hoo))
         col += i - start
-    tokens.append(hoooooooooooooooooooooooooooooooooooooooooooooooo(0,line,col))
+    tokens.append(hoooooooooooooooooooooooooooooooooooooooooooooooo(0,line,col,hoo))
     return tokens
 
 class hooooooooooooooooooooooooooooooooooooooooooooooooooooo:
@@ -99,7 +101,13 @@ class hooooooooooooooooooooooooooooooooooooooooooooooooooooo:
         if s not in TYPES or (s == 'void' and not allow_void): raise hooooooooooooooooooooooooooooooooooooooooooooooooo('expected a value type',t)
         return s
     def hooooooooooooooooooooooo(self):
-        funcs, body = [], []
+        funcs, body, imports = [], [], []
+        while self.hooooooooooooooooooooooooooooooooooo().code == 85:
+            t = self.hoooooooooooooooooooooooooooooooooooo()
+            if self.hooooooooooooooooooooooooooooooooooo().code != 21:
+                raise hooooooooooooooooooooooooooooooooooooooooooooooooo('import requires a literal text path',self.hooooooooooooooooooooooooooooooooooo())
+            path = self.hoooooooooooooooooooooooooooo()
+            imports.append(hoooooooooooooooooooooooooooooooooooooooooooooooooo('import',[path.args[0]],t))
         while self.hooooooooooooooooooooooooooooooooooo().code:
             if self.hooooooooooooooooooooooooooooooooooo().code == 5:
                 t = self.hoooooooooooooooooooooooooooooooooooo(); name = self.hoooooooooooooooooooooooooooooooooooooo(); result = self.hooooooooooooooooooooooooooooooooooooooo(True); params = []
@@ -107,7 +115,7 @@ class hooooooooooooooooooooooooooooooooooooooooooooooooooooo:
                 self.hooooooooooooooooooooooooooooooooooooo(6); block = self.hooooooooooooooooooooooooooooo({2}); self.hooooooooooooooooooooooooooooooooooooo(2)
                 funcs.append(hooooooooooooooooooooooooooooooooooooooooooooooooooo(name,result,params,block,t))
             else: body.append(self.hooooooooooooooooooooooooooooooooo())
-        return hoooooooooooooooooooooooooooooooooooooooooooooooooooo(funcs,body)
+        return hoooooooooooooooooooooooooooooooooooooooooooooooooooo(funcs,body,imports)
     def hooooooooooooooooooooooooooooo(self, stops):
         result = []
         while self.hooooooooooooooooooooooooooooooooooo().code not in stops:
@@ -132,6 +140,7 @@ class hooooooooooooooooooooooooooooooooooooooooooooooooooooo:
             return hoooooooooooooooooooooooooooooooooooooooooooooooooo('while',[cond,body],t)
         if c in (18,19): return hoooooooooooooooooooooooooooooooooooooooooooooooooo(WORDS[c],[self.hoooooooooooooooooooooooooooo()],t)
         if c in (57,58): return hoooooooooooooooooooooooooooooooooooooooooooooooooo(WORDS[c],[],t)
+        if c == 85: raise hooooooooooooooooooooooooooooooooooooooooooooooooo('imports must precede functions and statements',t)
         raise hooooooooooooooooooooooooooooooooooooooooooooooooo('expected a statement',t)
     def hoooooooooooooooooooooooooooo(self):
         self.depth += 1
@@ -174,4 +183,4 @@ class hooooooooooooooooooooooooooooooooooooooooooooooooooooo:
         if c in ARITY: return hoooooooooooooooooooooooooooooooooooooooooooooooooo(WORDS[c],[self.hoooooooooooooooooooooooooooo() for _ in range(ARITY[c])],t)
         raise hooooooooooooooooooooooooooooooooooooooooooooooooo('expected an expression',t)
 
-def hooooooooooooooooooooooo(source): return hooooooooooooooooooooooooooooooooooooooooooooooooooooo(hoooooooooooooooooooooo(source)).hooooooooooooooooooooooo()
+def hooooooooooooooooooooooo(source, hoo=None): return hooooooooooooooooooooooooooooooooooooooooooooooooooooo(hoooooooooooooooooooooo(source,hoo)).hooooooooooooooooooooooo()

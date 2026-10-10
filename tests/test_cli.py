@@ -15,7 +15,7 @@ class CLITests(unittest.TestCase):
     def test_error_position(self):
         with tempfile.TemporaryDirectory() as tmp:
             source=Path(tmp)/'bad.hoo'; source.write_text('hoo!')
-            r=self.hooooooooooooooooooooooooooooooooooooooooo('hoo',source); self.assertEqual(r.returncode,1); self.assertIn(str(source)+': 1:1:',r.stderr)
+            r=self.hooooooooooooooooooooooooooooooooooooooooo('hoo',source); self.assertEqual(r.returncode,1); self.assertIn(str(source.resolve())+':1:1:',r.stderr)
     def test_run_arguments(self):
         with tempfile.TemporaryDirectory() as tmp:
             source=Path(tmp)/'args.hoo'; source.write_text(hooooooooooooooooooooo(hoooooooooo('print',hoooooooooo('argument',hoooooooo(0)))))

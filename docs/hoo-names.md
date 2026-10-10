@@ -1,4 +1,4 @@
-# More Hoo: implementation naming and CLI in 0.3.0
+# More Hoo: implementation naming, CLI and imports in 0.4.0
 
 Hoo naming now extends into the compiler and runtime. Custom Python functions, methods and classes use only `h` followed by `o`s. Native runtime functions, helper functions, types, enum constants and Objective-C classes do too. Generated application functions, variables, temporaries and GC frame identifiers receive distinct Hoo names.
 
@@ -33,6 +33,7 @@ Version 0.3.0 removes English commands, options and the `hooc` executable. Langu
 | Static type checker | `hoo/hooo.py` |
 | Native code generator | `hoo/hoooo.py` |
 | Lexer, parser and AST | `hoo/hooooo.py` |
+| Import loader | `hoo/hooooooooo.py` |
 | Compiler driver | `hoo/hoooooo.py` |
 | Word encoders | `hoo/hooooooo.py` |
 | Runtime ABI | `hoo/runtime/hoo.h` |
@@ -208,3 +209,9 @@ The Python API intentionally changed in 0.2.0; use these spellings instead of th
 | `--hooooooo` | macOS application bundle (build) |
 
 Paths and application arguments are user data, so they may contain ordinary text. `--` separates application arguments from compiler options. Help descriptions and diagnostics explain the interface in English.
+
+## Import and source location helpers (v0.4.0)
+
+The import loader `hoo.hoooooooo.hoo` combines the dependency graph, and its local `hooo` helper visits dependencies. The compiler driver's local `hooooo` alias refers to that loader. Code generation emits locations using `hooooooooooooooooooooooooooooooooooooooooooooooooooooooooo` (57 o characters). The native location function remains `hooooo`, now taking a file pointer as its third argument. Source paths are escaped as UTF-8 octal bytes in C literals.
+
+Language imports use the word with 85 o characters and a Hoo-encoded literal path. The Hoo-only CLI command and flag spellings are unchanged from v0.3.0.

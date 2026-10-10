@@ -32,27 +32,28 @@ def hoo():
         source=options.source.read_text(encoding='utf-8')
         if getattr(options,'output',None) and options.source.resolve()==options.output.resolve():
             raise hooooooooooooooooooooooooooooooooooooooooooooooooo('output must not overwrite the source file')
-        if options.command=='check': hooo(source); print(f'{options.source}: Hoo is well typed. Somehow.')
+        if options.command=='check': hooo(source,options.source); print(f'{options.source}: Hoo is well typed. Somehow.')
         elif options.command=='tokens':
             for t in hoooooooooooooooooooooo(source)[:-1]:
                 meaning=WORDS.get(t.code, f'digit {t.code-64:X}' if 64<=t.code<=79 else f'identifier {t.code-128}' if t.code>=128 else 'reserved')
                 print(f'{t.line}:{t.column}\t{t.code} o\t{meaning}')
         elif options.command=='format':
-            hooo(source)
+            hooo(source,options.source)
             print('\n'.join('h'+'o'*t.code for t in hoooooooooooooooooooooo(source)[:-1]))
         elif options.command=='emit':
-            code=hooo(source)
+            code=hooo(source,options.source,options.output)
             if options.output: options.output.write_text(code)
             else: print(code,end='')
         elif options.command=='build':
-            result=hoooo(source,options.output,options.headless,options.app,options.sanitize)
+            result=hoooo(source,options.output,options.headless,options.app,options.sanitize,hoo=options.source)
             print(f'Compiled: {result}')
         elif options.command=='run':
             with tempfile.TemporaryDirectory(prefix='hoo-run-') as tmp:
-                executable=hoooo(source,Path(tmp)/'program',options.headless,sanitize=options.sanitize)
+                executable=hoooo(source,Path(tmp)/'program',options.headless,sanitize=options.sanitize,hoo=options.source)
                 return subprocess.run([str(executable),*options.args]).returncode
     except (hooooooooooooooooooooooooooooooooooooooooooooooooo,OSError,UnicodeError) as e:
-        print(f'{options.source}: {e}',file=sys.stderr); return 1
+        prefix = '' if getattr(getattr(e,'token',None),'source',None) else f'{options.source}: '
+        print(f'{prefix}{e}',file=sys.stderr); return 1
     return 0
 
 if __name__=='__main__': sys.exit(hoo())

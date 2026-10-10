@@ -37,22 +37,27 @@ jobs:
         env:
           HOO_SANITIZE: '1'
           HOO_GUI_TEST: '1'
-        run: xvfb-run -a python -m unittest discover -s tests -p test_language.py -k desktop_controls -v
+        run: |
+          xvfb-run -a python -m unittest discover -s tests -p test_language.py -k desktop_controls -v
+          xvfb-run -a python -m unittest discover -s tests -p test_modules.py -k modular_desktop_callbacks -v
       - name: macOS native desktop controls and bundle
         if: runner.os == 'macOS'
         env:
           HOO_GUI_TEST: '1'
         run: |
           python -m unittest discover -s tests -p test_language.py -k desktop_controls -v
+          python -m unittest discover -s tests -p test_modules.py -k modular_desktop_callbacks -v
           ./bin/hoo hoooooo examples/counter.hoo --hoooooo build/HooCounter.app --hooooooo
           ./bin/hoo hoooooo examples/notepad.hoo --hoooooo build/HooNotes.app --hooooooo
           ./bin/hoo hoooooo examples/editor.hoo --hoooooo build/HooEditor.app --hooooooo
+          ./bin/hoo hoooooo examples/hoo/hoo.hoo --hoooooo build/HooModules.app --hooooooo
       - name: Linux desktop executables
         if: runner.os == 'Linux'
         run: |
           ./bin/hoo hoooooo examples/counter.hoo --hoooooo build/hoo-counter
           ./bin/hoo hoooooo examples/notepad.hoo --hoooooo build/hoo-notes
           ./bin/hoo hoooooo examples/editor.hoo --hoooooo build/hoo-editor
+          ./bin/hoo hoooooo examples/hoo/hoo.hoo --hoooooo build/hoo-modules
       - name: Fresh installation includes native runtime
         run: |
           python -m venv /tmp/hoo-install
@@ -60,6 +65,7 @@ jobs:
           /tmp/hoo-install/bin/hoo hoooooo examples/hello.hoo --hoooo --hoooooo /tmp/hoo-installed-hello
           test ! -e /tmp/hoo-install/bin/hooc
           /tmp/hoo-installed-hello
+          /tmp/hoo-install/bin/hoo hooooooo examples/hoo/hooooo.hoo --hoooo
       - name: Desktop application artifacts
         uses: actions/upload-artifact@v4
         with:

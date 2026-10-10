@@ -5,6 +5,7 @@
 ```text
 .hoo source (h/o/ASCII whitespace only)
     -> custom scanner -> position-bearing tokens
+    -> compile-time import graph -> combined syntax tree
     -> recursive-descent prefix parser -> structured syntax tree
     -> static symbol/type/control-flow analysis
     -> explicit, sequenced C expressions and native functions
@@ -17,6 +18,7 @@ The frontend is Python without third-party runtime dependencies. The compiled re
 ## Boundaries
 
 - `hooooo.py`: legal alphabet, word lengths, source positions, hexadecimal literals, UTF-8 validation, grammar, AST. No parser generator.
+- `hooooooooo.py`: import resolution, dependency order, import-once loading, cycle/size checks and protection against overwriting source dependencies.
 - `hooo.py`: function registration, forward declarations, type checking, argument arity, lexical visibility, callback signatures, global prelude and return-path checking.
 - `hoooo.py`: sequenced C temporaries, native functions, lexical scope lifetimes, short-circuit branching and GC root registration.
 - `hoooooo.py`: native toolchain invocation using argument arrays; staging and atomic executable replacement; macOS bundle metadata.
@@ -36,7 +38,7 @@ Toolkit objects have a separate ownership model. Native windows and controls sta
 
 ## Diagnostics and safety
 
-Lexer/parser/type errors include line and column; the CLI adds the source filename. Runtime statements/operations update the current source location. Arithmetic checks addition, subtraction, multiplication, division, negation and the signed-minimum division edge. List access checks negative and high indices. Files and arguments preserve UTF-8/NUL-free text invariants. A global read performed indirectly during an earlier global initializer fails explicitly if its target is uninitialized.
+Lexer/parser/type errors include line and column; the CLI adds the source filename. Runtime statements/operations update the original file, line and column, including operations in imported modules. Arithmetic checks addition, subtraction, multiplication, division, negation and the signed-minimum division edge. List access checks negative and high indices. Files and arguments preserve UTF-8/NUL-free text invariants. A global read performed indirectly during an earlier global initializer fails explicitly if its target is uninitialized.
 
 The runtime is not a security boundary. Compiled applications run with the permissions of the launching user. I/O errors terminate the process. Deep native recursion is limited by the operating system stack.
 

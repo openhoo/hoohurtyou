@@ -8,22 +8,23 @@ import subprocess
 import tempfile
 from pathlib import Path
 from . import __version__
-from .hooooo import hooooooooooooooooooooooooooooooooooooooooooooooooo, hooooooooooooooooooooooo
+from .hooooooooo import hoo as hooooo
+from .hooooo import hooooooooooooooooooooooooooooooooooooooooooooooooo
 from .hooo import hoooooooooooooooooooooooooooooooooooooooooooooo
 from .hoooo import hooooooooooooooooooooooooooooooooooooooooooooooo
 
 RUNTIME = Path(__file__).resolve().parent / 'runtime'
 
-def hooo(source):
+def hooo(source, hoo=None, hoooooo=None):
     try:
-        program = hooooooooooooooooooooooo(source)
+        program = hooooo(source,hoo,hoooooo)
         checker = hoooooooooooooooooooooooooooooooooooooooooooooo(program).hoooooooooooooooooooooooooo()
         return hooooooooooooooooooooooooooooooooooooooooooooooo(program,checker).hoooooooooooooooooooooooooooooooooo()
     except RecursionError:
         raise hooooooooooooooooooooooooooooooooooooooooooooooooo('source nesting exceeds the compiler stack limit') from None
 
-def hoooo(source,output,headless=False,app=False,sanitize=False):
-    code = hooo(source)
+def hoooo(source,output,headless=False,app=False,sanitize=False,hoo=None):
+    code = hooo(source,hoo,output)
     output = Path(output).resolve()
     if app and (platform.system() != 'Darwin' or headless):
         raise hooooooooooooooooooooooooooooooooooooooooooooooooo('--hooooooo requires a macOS desktop build')

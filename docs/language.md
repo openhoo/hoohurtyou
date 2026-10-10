@@ -1,4 +1,4 @@
-# The Hoo language specification (0.2.0)
+# The Hoo language specification (0.4.0)
 
 This document uses English metasyntax to explain the grammar. **None of those English names are accepted in source.** Every token below is an `h` followed by exactly the indicated number of `o` characters. For example, `end` means `hoo`.
 
@@ -13,7 +13,8 @@ Token lengths 64–79 encode hexadecimal digits 0–F inside literals. Lengths 1
 All expressions are prefix; operator precedence does not exist. Fixed-arity expressions consume exactly the required number of following expressions. Functions, literals, calls, arrays and control blocks use explicit `end` markers.
 
 ```text
-program      = (function | statement)*
+program      = import* (function | statement)*
+import       = import string (HEX HEX)* end
 function     = function IDENT result-type (IDENT value-type)* body statement* end
 statement    = let IDENT value-type expression
              | set IDENT expression
@@ -36,6 +37,18 @@ value-type   = number | text | boolean | list | widget | callback
 ```
 
 Function parameters have no punctuation or separator; `body` terminates the signature. A return always ends with `end`, including a bare void return. `if` and `while` require the `body` word. `else` begins its own block without an additional `body`. Calls and arrays end with `end`, including empty calls and empty lists.
+
+## Compile-time imports
+
+`import` is the word with 85 o characters. It must be followed by a literal encoded text path and appear before functions or statements. The path is encoded using the ordinary Hoo string syntax: source still contains only Hoo words. Imported filenames match `hoo+.hoo`; directory components match `hoo+`. Examples of decoded paths are `hooo.hoo` and `hoo/hoooo.hoo`.
+
+Paths resolve relative to the importing file. Absolute paths, `..`, non-Hoo names and symlinks resolving outside the entry file's directory tree are rejected. Imported files pass through the same handwritten lexer and parser. Imports are compile-time dependencies and are bundled into one native executable; no source files are needed at runtime.
+
+Dependencies are visited in source order, depth first, and each canonical file is loaded once. An imported module may contain imports, functions and global declarations; it cannot contain top-level executable statements. Imported globals initialize before the importing file's globals. Functions and globals share one compilation namespace, and duplicate identifiers are rejected. There are no private exports or namespace qualifiers in this version. Functions can call functions in other modules and native callbacks can reference imported functions.
+
+Import cycles fail with a dependency chain and the importing source position. The graph allows at most 256 files including the entry and at most 64 files along one dependency chain. Compiler and runtime errors preserve the original file, line and column. Output paths cannot overwrite any loaded source file.
+
+The CLI supplies the origin path automatically. Python integrations pass it as the second argument to `hoo.hoooooo.hooo(source, path)` or as `hoo=path` to `hoo.hoooooo.hoooo(source, output, ...)`. In-memory compilation without a path continues to work for programs without imports. The `hooooo` formatter validates dependencies and formats only the entry file; `hoooo` displays the entry file's tokens.
 
 ## Types and scope
 
@@ -131,6 +144,7 @@ Example in explanatory notation: `print integer HEX1 end` prints 1. Its actual H
 | 82 | `place` |
 | 83 | `enabled` |
 | 84 | `home` |
+| 85 | `import` |
 
 ## Builtin expression signatures
 
@@ -185,4 +199,4 @@ Desktop operations are explained in [the desktop guide](desktop.md). `open_file`
 
 ## Failures and limits
 
-Compile-time failures return CLI status 1. Runtime failures print a source line/column and exit 70. There is no exception recovery. Parser expression nesting is limited to 200 levels. Native recursion uses the platform stack. Functions, globals and locals are limited by the identifier space, compilation resources and process memory.
+Compile-time failures return CLI status 1. Runtime failures print the original source file (when available), line and column and exit 70. There is no exception recovery. Parser expression nesting is limited to 200 levels. Native recursion uses the platform stack. Functions, globals and locals are limited by the identifier space, compilation resources and process memory.

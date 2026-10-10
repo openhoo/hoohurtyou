@@ -4,11 +4,13 @@ static hoooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
 static size_t root_count, root_cap, allocations;
 static int hargc, source_line, source_column;
 static char **hargv;
+static const char *source_file;
 _Noreturn void hoooooo(const char *message) {
-    fprintf(stderr,"hoo runtime %d:%d: %s\n",source_line,source_column,message);
+    if(source_file) fprintf(stderr,"hoo runtime %s:%d:%d: %s\n",source_file,source_line,source_column,message);
+    else fprintf(stderr,"hoo runtime %d:%d: %s\n",source_line,source_column,message);
     exit(70);
 }
-void hooooo(int line,int column) { source_line=line; source_column=column; }
+void hooooo(int line,int column,const char *file) { source_line=line; source_column=column; source_file=file; }
 void *hooooooo(size_t bytes) {
     void *p=calloc(1,bytes ? bytes : 1);
     if(!p) hoooooo("out of memory");

@@ -18,9 +18,12 @@ class hooooooooooooooooooooooooooooooooooooooooooooooo:
         return self.symbols[key]
     def hoooooooooooooooooooooooooooooooo(self,code):
         name=self.hooooooooooooooooooooooooooooooo(); self.hoooooooooooooooooooooooooooooo(f'hoooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo {name} = {code};'); self.hoooooooooooooooooooooooooooooo(f'hoooooooo(&{name});'); return name
+    def hooooooooooooooooooooooooooooooooooooooooooooooooooooooooo(self,n):
+        file = 'NULL' if n.token.source is None else '"'+''.join(f'\\{b:03o}' for b in n.token.source.encode('utf-8'))+'"'
+        self.hoooooooooooooooooooooooooooooo(f'hooooo({n.token.line}, {n.token.column}, {file});')
     def hoooooooooooooooooooooooooooo(self,n):
         op=n.op
-        self.hoooooooooooooooooooooooooooooo(f'hooooo({n.token.line}, {n.token.column});')
+        self.hooooooooooooooooooooooooooooooooooooooooooooooooooooooooo(n)
         if op=='integer': return self.hoooooooooooooooooooooooooooooooo(f'hoooooooooooooo(INT64_C({n.args[0]}))')
         if op=='string':
             # ASCII-only octal escapes keep every UTF-8 byte unambiguous to C.
@@ -43,7 +46,7 @@ class hooooooooooooooooooooooooooooooooooooooooooooooo:
             values='(hoooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo[]){'+', '.join(args)+'}' if args else 'NULL'
             return self.hoooooooooooooooooooooooooooooooo(f'hooooooooooooooooooo({len(args)}, {values})')
         args=[self.hoooooooooooooooooooooooooooo(a) for a in n.args]
-        self.hoooooooooooooooooooooooooooooo(f'hooooo({n.token.line}, {n.token.column});')
+        self.hooooooooooooooooooooooooooooooooooooooooooooooooooooooooo(n)
         return self.hoooooooooooooooooooooooooooooooo(f'{HOO[op]}({", ".join(args)})')
     def hooooooooooooooooooooooooooooo(self,body,global_body=False):
         frame=self.hooooooooooooooooooooooooooooooo('scope'); self.hoooooooooooooooooooooooooooooo(f'size_t {frame} = hooooooooo();')
@@ -53,7 +56,7 @@ class hooooooooooooooooooooooooooooooooooooooooooooooo:
         op=n.op
         if op=='let' and not global_body: self.hoooooooooooooooooooooooooooooo(f'hoooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo {self.hoooooooooooooooooooooooooooooooooooooooooooooooooooooo(n.args[0])} = hooooooooooooo();')
         mark=self.hooooooooooooooooooooooooooooooo('statement'); self.hoooooooooooooooooooooooooooooo(f'size_t {mark} = hooooooooo();')
-        self.hoooooooooooooooooooooooooooooo(f'hooooo({n.token.line}, {n.token.column});')
+        self.hooooooooooooooooooooooooooooooooooooooooooooooooooooooooo(n)
         if op in ('let','set'):
             value=self.hoooooooooooooooooooooooooooo(n.args[-1]); self.hoooooooooooooooooooooooooooooo(f'{self.hoooooooooooooooooooooooooooooooooooooooooooooooooooooo(n.args[0])} = {value};')
         elif op in ('do','print'):
