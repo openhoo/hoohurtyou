@@ -225,3 +225,5 @@ All 98 remaining native variable, parameter and field spellings use Hoo words st
 The macOS bundle executable is `hoo`; temporary generated code and executables are `hoo.c` and `hoo`. Test environment switches are now `hoo=1` for sanitizers and `hooo=1` for native GUI checks. The host toolchain selector `CC` and OS environment variable `HOME` retain their standard names.
 
 This changes Python parameter/field/constant names and native struct field names. Prefer positional Python arguments, or consult the JSON map for renamed keywords. The optional source-origin keyword `hoo` remains unchanged. Regenerate emitted C with v0.4.0 before linking it against the v0.4.0 runtime. Compiler command and flag spellings remain unchanged from v0.3.0.
+
+The checkout launcher also uses Hoo import aliases (`hooo` for `sys`, `hoooo` for `Path`). Python naming checks include `bin/hoo`. Native naming checks inspect the complete Clang AST and select declarations by source file, including the runtime header and console backend; a regression fixture confirms English globals, functions, parameters and locals cannot evade the audit.
