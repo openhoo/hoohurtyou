@@ -23,6 +23,12 @@ class NamingTests(unittest.TestCase):
         names=re.findall(r'^.*?\b(\w+)\([^;{}]*\);',source,re.M)
         self.assertGreater(len(names),40)
         for name in names: self.assertRegex(name,r'\Ahoo+\Z')
+    def test_gtk_cleanup_callback_reference_is_hoo(self):
+        source=(ROOT/'hoo/runtime/hooo.c').read_text()
+        cleanup=re.findall(r'g_signal_connect_data\([^;]+,(\w+),0\)',source)
+        self.assertEqual(len(cleanup),1)
+        self.assertRegex(cleanup[0],r'\Ahoo+\Z')
+        self.assertRegex(source,r'static void '+cleanup[0]+r'\(')
     def test_generated_symbols_are_hoo_and_deterministic(self):
         source=hooooooooooooooooooooo(hoooooooooooooooo(0,'number',[],hooooooooooooooooo(hoooooooo(42))),hoooooooooo('print',hooooooooooooo(0)))
         generated=hooo(source)
