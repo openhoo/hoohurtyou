@@ -16,13 +16,13 @@ The frontend is Python without third-party runtime dependencies. The compiled re
 
 ## Boundaries
 
-- `syntax.py`: legal alphabet, word lengths, source positions, hexadecimal literals, UTF-8 validation, grammar, AST. No parser generator.
-- `checker.py`: function registration, forward declarations, type checking, argument arity, lexical visibility, callback signatures, global prelude and return-path checking.
-- `emitter.py`: sequenced C temporaries, native functions, lexical scope lifetimes, short-circuit branching and GC root registration.
-- `compiler.py`: native toolchain invocation using argument arrays; staging and atomic executable replacement; macOS bundle metadata.
-- `runtime/core.c`: tagged values, heap objects, tracing collector, UTF-8 text, lists, checked arithmetic, filesystem and arguments.
-- `runtime/cocoa.m` / `runtime/gtk.c`: native widgets, native event loops and callbacks.
-- `runtime/headless.c`: no desktop dependencies; explicit failure if a program uses desktop operations.
+- `hooooo.py`: legal alphabet, word lengths, source positions, hexadecimal literals, UTF-8 validation, grammar, AST. No parser generator.
+- `hooo.py`: function registration, forward declarations, type checking, argument arity, lexical visibility, callback signatures, global prelude and return-path checking.
+- `hoooo.py`: sequenced C temporaries, native functions, lexical scope lifetimes, short-circuit branching and GC root registration.
+- `hoooooo.py`: native toolchain invocation using argument arrays; staging and atomic executable replacement; macOS bundle metadata.
+- `runtime/hoo.c`: tagged values, heap objects, tracing collector, UTF-8 text, lists, checked arithmetic, filesystem and arguments.
+- `runtime/hoo.m` / `runtime/hooo.c`: native widgets, native event loops and callbacks.
+- `runtime/hoooo.c`: no desktop dependencies; explicit failure if a program uses desktop operations.
 
 ## Evaluation and memory
 

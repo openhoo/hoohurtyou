@@ -1,2 +1,2 @@
-"""Hoo 0.1.0: you asked for this."""
-__version__ = '0.1.0'
+"""Hoo 0.2.0: you asked for this."""
+__version__ = '0.2.0'

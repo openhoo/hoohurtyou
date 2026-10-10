@@ -77,6 +77,8 @@ Count the `o` characters **after** the initial `h`. Their count is the token num
 
 Numbers are terminated sequences of hexadecimal hoo digits. Strings are terminated sequences of UTF-8 bytes, each encoded as two hexadecimal hoo digits. Identifiers occupy a separate word-length range. The grammar is prefix and self-delimiting: you must count correctly, but the compiler does not need to guess.
 
+The compiler implementation also uses Hoo function/class names, Hoo filenames and Hoo native symbols. See the [implementation naming reference](docs/hoo-names.md). You can now write `./hooc hooooooo examples/hello.hoo --headless`, and an installed compiler also exposes the `hoo` executable.
+
 Read the complete [language specification](docs/language.md), [desktop guide](docs/desktop.md), and [compiler architecture](docs/architecture.md).
 
 ## Tools for counting regrets
@@ -91,7 +93,7 @@ Read the complete [language specification](docs/language.md), [desktop guide](do
 
 `tokens` prints word lengths and meanings with line/column positions. `format` validates and prints one token per line to stdout. `emit` exposes the native compilation input. `CC` selects a compatible compiler binary (a path or executable name, not a shell command).
 
-The optional Python encoders in `hoo.encoding` are for editor integrations, tests, and generating templates. The compiler accepts **only Hoo source**. The checked-in example generator is deterministic:
+The optional Python encoders in `hoo.hooooooo` are for editor integrations, tests, and generating templates. The compiler accepts **only Hoo source**. The checked-in example generator is deterministic:
 
 ```sh
 python3 tools/generate_examples.py

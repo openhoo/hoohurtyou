@@ -1,4 +1,4 @@
-# The Hoo language specification (0.1.0)
+# The Hoo language specification (0.2.0)
 
 This document uses English metasyntax to explain the grammar. **None of those English names are accepted in source.** Every token below is an `h` followed by exactly the indicated number of `o` characters. For example, `end` means `hoo`.
 
@@ -59,7 +59,7 @@ To encode an integer, convert it to hexadecimal, replace each digit D with a wor
 
 To encode a string, first obtain its UTF-8 bytes. Encode each byte as two hex digits, replace those digits with the same 64–79 word-length encoding, and wrap with `string` and `end`. Empty strings are allowed. An odd number of digits, NUL or invalid UTF-8 is rejected.
 
-Example in explanatory notation: `print integer HEX1 end` prints 1. Its actual Hoo source is the short example in the README. `hoo.encoding` can emit exact words for editor integrations; it is not an alternate compiler input language.
+Example in explanatory notation: `print integer HEX1 end` prints 1. Its actual Hoo source is the short example in the README. `hoo.hooooooo` can emit exact words for editor integrations; it is not an alternate compiler input language.
 
 ## Complete word table
 
