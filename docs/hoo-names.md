@@ -1,4 +1,4 @@
-# More Hoo: implementation naming, CLI and imports in 0.4.0
+# More Hoo: implementation naming, CLI and imports (0.5.0)
 
 Hoo naming now extends into the compiler and runtime. Custom Python functions, methods and classes use only `h` followed by `o`s. Native runtime functions, helper functions, types, enum constants and Objective-C classes do too. Generated application functions, variables, temporaries and GC frame identifiers receive distinct Hoo names.
 
@@ -16,6 +16,7 @@ The installed executable is `hoo`. The repository launcher is `./bin/hoo` (also 
 | `hooooo` | Format |
 | `hoooooo` | Build |
 | `hooooooo` | Compile and run |
+| `hoooooooo` | Explain: print a readable outline of the checked program (output is not Hoo and is rejected as source) |
 
 ```sh
 ./bin/hoo hoo examples/counter.hoo
@@ -34,6 +35,7 @@ Version 0.3.0 removes English commands, options and the `hooc` executable. Langu
 | Native code generator | `hoo/hoooo.py` |
 | Lexer, parser and AST | `hoo/hooooo.py` |
 | Import loader | `hoo/hooooooooo.py` |
+| Readable explanation | `hoo/hoooooooooo.py` |
 | Compiler driver | `hoo/hoooooo.py` |
 | Word encoders | `hoo/hooooooo.py` |
 | Runtime ABI | `hoo/runtime/hoo.h` |
@@ -227,3 +229,7 @@ The macOS bundle executable is `hoo`; temporary generated code and executables a
 This changes Python parameter/field/constant names and native struct field names. Prefer positional Python arguments, or consult the JSON map for renamed keywords. The optional source-origin keyword `hoo` remains unchanged. Regenerate emitted C with v0.4.0 before linking it against the v0.4.0 runtime. Compiler command and flag spellings remain unchanged from v0.3.0.
 
 The checkout launcher also uses Hoo import aliases (`hooo` for `sys`, `hoooo` for `Path`). Python naming checks include `bin/hoo`. Native naming checks inspect the complete Clang AST and select declarations by source file, including the runtime header and console backend; a regression fixture confirms English globals, functions, parameters and locals cannot evade the audit.
+
+## Canvas, timer and text runtime (v0.5.0)
+
+Native symbols `hoooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo`–`hoooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo` (90–102 o characters) implement `slice`, `code`, `character`, `find`, `random`, `clock`, `canvas`, `fill`, `clear`, `paint`, `timer`, `key` and `pixel`. The shared framebuffer type, backend hooks, font table and helpers use 103–121 o characters; the canvas view class and its surface property follow the same rule. New Python and native variable and field spellings were appended to `docs/hoo-identifiers.json` starting after the previous maximum, so earlier spellings are unchanged. The explain command lives in `hoo/hoooooooooo.py`.

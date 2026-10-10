@@ -20,6 +20,9 @@ That program prints `1`. Yes, really.
 - Native desktop windows, labels, inputs, multiline editors, buttons, callbacks, file choosers, alerts, custom control geometry, and enable/disable operations.
 - UTF-8 file I/O, existence checks, command-line arguments, and macOS `.app` packaging.
 - macOS AppKit and Linux GTK 3 desktop runtimes. Console builds can omit the GUI dependency.
+- Pixel canvases with deterministic drawing, a built-in bitmap font, keyboard queues and repeating timers: enough for real-time games. A playable Snake is included.
+- Unicode text slicing/searching/code points, unbiased random numbers and a monotonic clock.
+- `hoo hoooooooo` explains any Hoo program as a readable outline, because nobody can count to 143.
 
 ## Start hurting
 
@@ -73,6 +76,7 @@ Count the `o` characters **after** the initial `h`. Their count is the token num
 | `hoooooo` | 6 | Begin a block |
 | `hooooooo` | 7 | Return |
 | `h` followed by 64–79 o characters | 64–79 | Hexadecimal digits 0–F inside literals |
+| `h` followed by 80–98 o characters | 80–98 | Files, imports, text tools, canvas, timers and keys |
 | `h` followed by 128–4095 o characters | 128–4095 | Identifiers 0–3967 |
 
 Numbers are terminated sequences of hexadecimal hoo digits. Strings are terminated sequences of UTF-8 bytes, each encoded as two hexadecimal hoo digits. Identifiers occupy a separate word-length range. The grammar is prefix and self-delimiting: you must count correctly, but the compiler does not need to guess.
@@ -81,9 +85,32 @@ The compiler implementation uses Hoo names for functions, classes, variables, pa
 
 Read the complete [language specification](docs/language.md), [desktop guide](docs/desktop.md), and [compiler architecture](docs/architecture.md).
 
+## Play Snake, written entirely in hoo
+
+```sh
+./bin/hoo hoooooo examples/snake.hoo --hoooooo build/HooSnake.app --hooooooo
+open build/HooSnake.app
+```
+
+On Linux, build `--hoooooo build/hoo-snake` and run it. Arrow keys or WASD steer; Space restarts after a crash. The game is about 30 KB of `h` and `o`. Ask the compiler what it means:
+
+```sh
+./bin/hoo hoooooooo examples/snake.hoo
+```
+
+```text
+function f0() -> void:
+  let v40: text = key(v10)
+  while not(equal(v40, "")):
+    if and(or(equal(v40, "right"), equal(v40, "d")), not(equal(v2, 2))):
+...
+```
+
+The explanation is read-only output; feeding it back to the compiler fails, as it should.
+
 ## Applications with multiple Hoo files
 
-Version 0.4.0 adds compile-time imports. Imported filenames and directory names are Hoo words too. The included counter separates application controls from shared state and callbacks:
+Version 0.4.0 added compile-time imports. Imported filenames and directory names are Hoo words too. The included counter separates application controls from shared state and callbacks:
 
 ```sh
 ./bin/hoo hoo examples/hoo/hoo.hoo
@@ -100,10 +127,11 @@ open build/HooModules.app
 ./bin/hoo hoooo examples/hello.hoo
 ./bin/hoo hooo examples/factorial.hoo --hoooooo build/factorial.c
 ./bin/hoo hooooo examples/hello.hoo
+./bin/hoo hoooooooo examples/factorial.hoo
 ./bin/hoo hoooooo examples/lists.hoo --hoooooo build/lists --hoooo --hooooo
 ```
 
-`hoooo` prints word lengths and meanings with line/column positions. `hooooo` validates and prints one token per line to stdout. `hooo` exposes the native compilation input. `CC` selects a compatible compiler binary (a path or executable name, not a shell command).
+`hoooooooo` prints a readable outline. `hoooo` prints word lengths and meanings with line/column positions. `hooooo` validates and prints one token per line to stdout. `hooo` exposes the native compilation input. `CC` selects a compatible compiler binary (a path or executable name, not a shell command).
 
 The optional Python encoders in `hoo.hooooooo` are for editor integrations, tests, and generating templates. The compiler accepts **only Hoo source**. The checked-in example generator is deterministic:
 
@@ -125,6 +153,6 @@ Linux desktop tests run under `xvfb-run -a`. GitHub Actions checks Linux and mac
 
 This is a working small language and desktop toolkit, with deliberately impractical syntax. The custom compiler frontend and runtime are original; final instruction selection, linking, and operating-system widgets use Clang and the platform toolkit.
 
-Desktop applications target macOS or Linux. There is no Windows GUI backend, generic collection type, exception recovery, networking library, threading, or application sandbox yet. Runtime errors exit with status 70. File writes are direct rather than atomic. Widgets are retained for the application's lifetime; temporary language strings and lists are collected. Compiled macOS bundles are local unsigned builds; distribution signing and notarization are separate work.
+Desktop applications target macOS or Linux. There is no Windows GUI backend, generic collection type, exception recovery, networking library, threading, audio, mouse input on canvases, or application sandbox yet. Runtime errors exit with status 70. File writes are direct rather than atomic. Widgets are retained for the application's lifetime; temporary language strings and lists are collected. Compiled macOS bundles are local unsigned builds; distribution signing and notarization are separate work.
 
 MIT licensed. Hoo responsibly.
