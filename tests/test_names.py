@@ -41,13 +41,13 @@ class NamingTests(unittest.TestCase):
     def test_hoo_cli_spelling_runs_native_program(self):
         with tempfile.TemporaryDirectory() as tmp:
             path=Path(tmp)/'hoo.hoo'; path.write_text(hoooooooooo('print',hoooooooo(42)))
-            r=subprocess.run([sys.executable,str(ROOT/'hooc'),'hooooooo',str(path),'--headless'],capture_output=True,text=True,timeout=30)
+            r=subprocess.run([sys.executable,str(ROOT/'bin/hoo'),'hooooooo',str(path),'--hoooo'],capture_output=True,text=True,timeout=30)
             self.assertEqual(r.returncode,0,r.stderr); self.assertEqual(r.stdout,'42\n')
-    def test_hoo_cli_spellings_have_same_output(self):
+    def test_hoo_cli_spellings_reject_english_aliases(self):
         path=ROOT/'examples/hello.hoo'
         for alias,name in [('hoo','check'),('hooo','emit'),('hoooo','tokens'),('hooooo','format')]:
             with self.subTest(alias=alias):
-                a=subprocess.run([sys.executable,str(ROOT/'hooc'),alias,str(path)],capture_output=True,text=True)
-                b=subprocess.run([sys.executable,str(ROOT/'hooc'),name,str(path)],capture_output=True,text=True)
-                self.assertEqual(a.returncode,0,a.stderr); self.assertEqual(a.stdout,b.stdout)
+                a=subprocess.run([sys.executable,str(ROOT/'bin/hoo'),alias,str(path)],capture_output=True,text=True)
+                b=subprocess.run([sys.executable,str(ROOT/'bin/hoo'),name,str(path)],capture_output=True,text=True)
+                self.assertEqual(a.returncode,0,a.stderr); self.assertEqual(b.returncode,2,b.stderr)
 if __name__=='__main__': unittest.main()

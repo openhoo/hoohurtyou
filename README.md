@@ -28,25 +28,25 @@ Requirements: Python 3.10+ for the compiler, and Clang for native compilation. O
 From this checkout:
 
 ```sh
-./hooc run examples/hello.hoo --headless
-./hooc run examples/factorial.hoo --headless
-./hooc build examples/counter.hoo -o build/counter
+./bin/hoo hooooooo examples/hello.hoo --hoooo
+./bin/hoo hooooooo examples/factorial.hoo --hoooo
+./bin/hoo hoooooo examples/counter.hoo --hoooooo build/counter
 ./build/counter
 ```
 
 Build a Finder-launchable macOS application:
 
 ```sh
-./hooc build examples/counter.hoo -o build/HooCounter.app --app
+./bin/hoo hoooooo examples/counter.hoo --hoooooo build/HooCounter.app --hooooooo
 open build/HooCounter.app
 ```
 
-Each `--app` output must be a **new** directory. To rebuild, choose a new output name or move the previous bundle first.
+Each `--hooooooo` output must be a **new** directory. To rebuild, choose a new output name or move the previous bundle first.
 
 A real note application with multiline editing and disk persistence:
 
 ```sh
-./hooc build examples/notepad.hoo -o build/hoo-notes
+./bin/hoo hoooooo examples/notepad.hoo --hoooooo build/hoo-notes
 ./build/hoo-notes ./my-note.txt
 ```
 
@@ -57,7 +57,7 @@ Install the compiler into a virtual environment:
 ```sh
 python3 -m venv .venv
 .venv/bin/pip install .
-.venv/bin/hooc --version
+.venv/bin/hoo --hooo
 ```
 
 ## Why everything looks the same
@@ -77,21 +77,21 @@ Count the `o` characters **after** the initial `h`. Their count is the token num
 
 Numbers are terminated sequences of hexadecimal hoo digits. Strings are terminated sequences of UTF-8 bytes, each encoded as two hexadecimal hoo digits. Identifiers occupy a separate word-length range. The grammar is prefix and self-delimiting: you must count correctly, but the compiler does not need to guess.
 
-The compiler implementation also uses Hoo function/class names, Hoo filenames and Hoo native symbols. See the [implementation naming reference](docs/hoo-names.md). You can now write `./hooc hooooooo examples/hello.hoo --headless`, and an installed compiler also exposes the `hoo` executable.
+The compiler implementation also uses Hoo function/class names, Hoo filenames and Hoo native symbols. See the [implementation naming reference](docs/hoo-names.md). Write `./bin/hoo hooooooo examples/hello.hoo --hoooo`. The installed executable is `hoo`. Commands and flags are exclusively Hoo words; see the naming reference for their meanings.
 
 Read the complete [language specification](docs/language.md), [desktop guide](docs/desktop.md), and [compiler architecture](docs/architecture.md).
 
 ## Tools for counting regrets
 
 ```sh
-./hooc check examples/notepad.hoo
-./hooc tokens examples/hello.hoo
-./hooc emit examples/factorial.hoo -o build/factorial.c
-./hooc format examples/hello.hoo
-./hooc build examples/lists.hoo -o build/lists --headless --sanitize
+./bin/hoo hoo examples/notepad.hoo
+./bin/hoo hoooo examples/hello.hoo
+./bin/hoo hooo examples/factorial.hoo --hoooooo build/factorial.c
+./bin/hoo hooooo examples/hello.hoo
+./bin/hoo hoooooo examples/lists.hoo --hoooooo build/lists --hoooo --hooooo
 ```
 
-`tokens` prints word lengths and meanings with line/column positions. `format` validates and prints one token per line to stdout. `emit` exposes the native compilation input. `CC` selects a compatible compiler binary (a path or executable name, not a shell command).
+`hoooo` prints word lengths and meanings with line/column positions. `hooooo` validates and prints one token per line to stdout. `hooo` exposes the native compilation input. `CC` selects a compatible compiler binary (a path or executable name, not a shell command).
 
 The optional Python encoders in `hoo.hooooooo` are for editor integrations, tests, and generating templates. The compiler accepts **only Hoo source**. The checked-in example generator is deterministic:
 

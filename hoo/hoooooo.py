@@ -26,9 +26,9 @@ def hoooo(source,output,headless=False,app=False,sanitize=False):
     code = hooo(source)
     output = Path(output).resolve()
     if app and (platform.system() != 'Darwin' or headless):
-        raise hooooooooooooooooooooooooooooooooooooooooooooooooo('--app requires a macOS desktop build')
+        raise hooooooooooooooooooooooooooooooooooooooooooooooooo('--hooooooo requires a macOS desktop build')
     if app and (output.suffix != '.app' or output.exists()):
-        raise hooooooooooooooooooooooooooooooooooooooooooooooooo('--app output must be a new .app directory')
+        raise hooooooooooooooooooooooooooooooooooooooooooooooooo('--hooooooo output must be a new .app directory')
     compiler = os.environ.get('CC','clang')
     if not shutil.which(compiler): raise hooooooooooooooooooooooooooooooooooooooooooooooooo(f'C compiler {compiler!r} is unavailable; install Clang or set CC')
     flags = ['-std=c11','-O2','-Wall','-Wextra','-Wno-unused-variable','-Wno-unused-function','-I',str(RUNTIME)]
@@ -42,7 +42,7 @@ def hoooo(source,output,headless=False,app=False,sanitize=False):
         result = subprocess.run(['pkg-config','--cflags','--libs','gtk+-3.0'],capture_output=True,text=True)
         if result.returncode: raise hooooooooooooooooooooooooooooooooooooooooooooooooo('desktop builds need GTK 3 development headers (libgtk-3-dev)')
         native = [str(RUNTIME/'hooo.c'),*shlex.split(result.stdout)]
-    else: raise hooooooooooooooooooooooooooooooooooooooooooooooooo('desktop backend is supported on macOS and Linux; use --headless for console programs')
+    else: raise hooooooooooooooooooooooooooooooooooooooooooooooooo('desktop backend is supported on macOS and Linux; use --hoooo for console programs')
     output.parent.mkdir(parents=True,exist_ok=True)
     with tempfile.TemporaryDirectory(prefix='.hoo-build-',dir=output.parent) as tmp:
         tmp = Path(tmp); generated = tmp/'program.c'; generated.write_text(code)

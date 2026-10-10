@@ -10,19 +10,22 @@ from .hooooo import hooooooooooooooooooooooooooooooooooooooooooooooooo, WORDS, h
 HOO = {'h'+'o'*(2+i):name for i,name in enumerate(('check','emit','tokens','format','build','run'))}
 
 def hoo():
-    p=argparse.ArgumentParser(prog='hooc',description='Compile Hoo. Every word is hoo. Every mistake is yours.')
-    p.add_argument('--version',action='version',version=f'Hoo {__version__}')
-    sub=p.add_subparsers(dest='command',required=True)
+    p=argparse.ArgumentParser(prog='hoo',description='Compile Hoo. Every word is hoo. Every mistake is yours.',add_help=False,allow_abbrev=False)
+    p.add_argument('--hoo',action='help',help='show help')
+    p.add_argument('--hooo',action='version',version=f'Hoo {__version__}')
+    sub=p.add_subparsers(dest='command',required=True,metavar='hoo')
     for alias,name in HOO.items():
-        s=sub.add_parser(name,aliases=[alias]); s.add_argument('source',type=Path)
+        s=sub.add_parser(alias,add_help=False,allow_abbrev=False)
+        s.add_argument('--hoo',action='help',help='show help')
+        s.add_argument('source',type=Path,metavar='hoo')
         if name in ('build','run'):
-            s.add_argument('--headless',action='store_true',help='console-only runtime; no GUI dependencies')
-            s.add_argument('--sanitize',action='store_true',help='AddressSanitizer and UndefinedBehaviorSanitizer')
+            s.add_argument('--hoooo',dest='headless',action='store_true',help='console-only runtime; no GUI dependencies')
+            s.add_argument('--hooooo',dest='sanitize',action='store_true',help='AddressSanitizer and UndefinedBehaviorSanitizer')
         if name=='build':
-            s.add_argument('-o','--output',required=True,type=Path)
-            s.add_argument('--app',action='store_true',help='create a macOS .app bundle')
-        if name=='emit': s.add_argument('-o','--output',type=Path)
-        if name=='run': s.add_argument('args',nargs='*',help='program arguments (after --)')
+            s.add_argument('--hoooooo',dest='output',required=True,type=Path,metavar='hoo')
+            s.add_argument('--hooooooo',dest='app',action='store_true',help='create a macOS .app bundle')
+        if name=='emit': s.add_argument('--hoooooo',dest='output',type=Path,metavar='hoo')
+        if name=='run': s.add_argument('args',nargs='*',metavar='hoo',help='program arguments (after --)')
     options=p.parse_args()
     options.command=HOO.get(options.command,options.command)
     try:

@@ -44,20 +44,21 @@ jobs:
           HOO_GUI_TEST: '1'
         run: |
           python -m unittest discover -s tests -p test_language.py -k desktop_controls -v
-          ./hooc build examples/counter.hoo -o build/HooCounter.app --app
-          ./hooc build examples/notepad.hoo -o build/HooNotes.app --app
-          ./hooc build examples/editor.hoo -o build/HooEditor.app --app
+          ./bin/hoo hoooooo examples/counter.hoo --hoooooo build/HooCounter.app --hooooooo
+          ./bin/hoo hoooooo examples/notepad.hoo --hoooooo build/HooNotes.app --hooooooo
+          ./bin/hoo hoooooo examples/editor.hoo --hoooooo build/HooEditor.app --hooooooo
       - name: Linux desktop executables
         if: runner.os == 'Linux'
         run: |
-          ./hooc build examples/counter.hoo -o build/hoo-counter
-          ./hooc build examples/notepad.hoo -o build/hoo-notes
-          ./hooc build examples/editor.hoo -o build/hoo-editor
+          ./bin/hoo hoooooo examples/counter.hoo --hoooooo build/hoo-counter
+          ./bin/hoo hoooooo examples/notepad.hoo --hoooooo build/hoo-notes
+          ./bin/hoo hoooooo examples/editor.hoo --hoooooo build/hoo-editor
       - name: Fresh installation includes native runtime
         run: |
           python -m venv /tmp/hoo-install
           /tmp/hoo-install/bin/pip install .
-          /tmp/hoo-install/bin/hooc build examples/hello.hoo --headless -o /tmp/hoo-installed-hello
+          /tmp/hoo-install/bin/hoo hoooooo examples/hello.hoo --hoooo --hoooooo /tmp/hoo-installed-hello
+          test ! -e /tmp/hoo-install/bin/hooc
           /tmp/hoo-installed-hello
       - name: Desktop application artifacts
         uses: actions/upload-artifact@v4

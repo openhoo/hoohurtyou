@@ -12,7 +12,7 @@
     -> native executable / macOS .app
 ```
 
-The frontend is Python without third-party runtime dependencies. The compiled result is machine code. Calling `hooc run` compiles into a temporary executable and runs it; it does not interpret the syntax tree.
+The frontend is Python without third-party runtime dependencies. The compiled result is machine code. Calling `hoo hooooooo` compiles into a temporary executable and runs it; it does not interpret the syntax tree.
 
 ## Boundaries
 

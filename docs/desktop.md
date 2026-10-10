@@ -27,8 +27,8 @@ The ordinary language reference uses English names to explain tokens. Actual `.h
 
 ## Packaging
 
-`hooc build examples/editor.hoo -o build/HooEditor.app --app` creates a macOS application bundle containing a native executable and `Info.plist`. It can be launched by Finder or `open`. Use a new output path for each bundle build. Unsigned local bundles do not constitute a signed/notarized distribution package.
+`hoo hoooooo examples/editor.hoo --hoooooo build/HooEditor.app --hooooooo` creates a macOS application bundle containing a native executable and `Info.plist`. It can be launched by Finder or `open`. Use a new output path for each bundle build. Unsigned local bundles do not constitute a signed/notarized distribution package.
 
-Linux output is a native executable linked against GTK 3. A distributor must also provide the relevant GTK runtime packages. `--headless` selects the dependency-free console runtime and rejects GUI calls at execution.
+Linux output is a native executable linked against GTK 3. A distributor must also provide the relevant GTK runtime packages. `--hoooo` selects the dependency-free console runtime and rejects GUI calls at execution.
 
 The compiler needs Python and Clang. An end user's compiled app does not need Python or the compiler checkout.

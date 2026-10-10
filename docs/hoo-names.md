@@ -1,4 +1,4 @@
-# More Hoo: implementation naming in 0.2.0
+# More Hoo: implementation naming and CLI in 0.3.0
 
 Hoo naming now extends into the compiler and runtime. Custom Python functions, methods and classes use only `h` followed by `o`s. Native runtime functions, helper functions, types, enum constants and Objective-C classes do too. Generated application functions, variables, temporaries and GC frame identifiers receive distinct Hoo names.
 
@@ -6,7 +6,7 @@ The native symbols occupy the short-word range; generated symbols start above 12
 
 ## Hoo commands
 
-After installation, the compiler executable can be called `hoo` or `hooc`. The repository launcher is still `./hooc`.
+The installed executable is `hoo`. The repository launcher is `./bin/hoo` (also works outside the repository). Commands and flags accept only the Hoo spellings below; English aliases and abbreviated options are rejected.
 
 | Command word | Operation |
 |---|---|
@@ -18,12 +18,12 @@ After installation, the compiler executable can be called `hoo` or `hooc`. The r
 | `hooooooo` | Compile and run |
 
 ```sh
-./hooc hoo examples/counter.hoo
-./hooc hooooooo examples/factorial.hoo --headless
-./hooc hoooooo examples/editor.hoo -o build/MyHooEditor.app --app
+./bin/hoo hoo examples/counter.hoo
+./bin/hoo hooooooo examples/factorial.hoo --hoooo
+./bin/hoo hoooooo examples/editor.hoo --hoooooo build/MyHooEditor.app --hooooooo
 ```
 
-The English command aliases remain available. Language `.hoo` syntax is unchanged; existing Hoo programs compile without modification.
+Version 0.3.0 removes English commands, options and the `hooc` executable. Language `.hoo` syntax is unchanged; existing Hoo programs compile without modification.
 
 ## Hoo files
 
@@ -195,3 +195,16 @@ The Python API intentionally changed in 0.2.0; use these spellings instead of th
 | `H_CALLBACK` | `hoooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo` | 88 |
 | `HOO_RUNTIME_H` | `hooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo` | 89 |
 | Objective-C action selector | `hoooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo:` | 120 |
+
+## Compiler options (v0.3.0)
+
+| Flag | Meaning |
+|---|---|
+| `--hoo` | Help, at the root or on any command |
+| `--hooo` | Compiler version (root only) |
+| `--hoooo` | Headless runtime (build/run) |
+| `--hooooo` | Address and undefined behavior sanitizers (build/run) |
+| `--hoooooo hoo` | Output path (required for build, optional for C emission) |
+| `--hooooooo` | macOS application bundle (build) |
+
+Paths and application arguments are user data, so they may contain ordinary text. `--` separates application arguments from compiler options. Help descriptions and diagnostics explain the interface in English.

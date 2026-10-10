@@ -4,13 +4,12 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "hoohurtyou"
-version = "0.2.0"
+version = "0.3.0"
 description = "Hoo: a native compiled language made exclusively of hoo words"
 requires-python = ">=3.10"
 license = "MIT"
 
 [project.scripts]
-hooc = "hoo.__main__:hoo"
 hoo = "hoo.__main__:hoo"
 
 [tool.setuptools]
